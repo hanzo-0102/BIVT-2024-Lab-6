@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Lab6
 {
@@ -38,41 +36,39 @@ namespace Lab6
             {
                 this.name = name;
                 this.surname = surname;
-                this.marks = new int[5, 2];
+                this.marks = new int[2, 5];
             }
 
             public void Jump(int[] result)
             {
-                if (result.Length < 5)
+                if (result.Length != 5)
                 {
-                    throw new ArgumentException("Похоже, кто-то из судей опаздывает. (Нужно ровно 5 значений)");
-                }
-                else if (result.Length > 5)
-                {
-                    throw new ArgumentException("Слишком много глаз, программа нервничает. (Нужно ровно 5 значений)");
+                    throw new ArgumentException("Неверное количество судей (должно быть 5 элементов)");
                 }
 
-                for (int jumpIndex = 0; jumpIndex < marks.GetLength(1); jumpIndex++)
+                for (int i = 0; i < marks.GetLength(0); i++)
                 {
-                    bool isEmpty = true;
-                    for (int judgeIndex = 0; judgeIndex < marks.GetLength(0); judgeIndex++)
+                    bool isNull = true;
+                    for (int j = 0; j < marks.GetLength(1); j++)
                     {
-                        if (marks[judgeIndex, jumpIndex] != 0)
+                        if (marks[i, j] != 0)
                         {
-                            isEmpty = false;
+                            isNull = false;
                             break;
                         }
                     }
 
-                    if (isEmpty)
+                    if (isNull)
                     {
-                        for (int judgeIndex = 0; judgeIndex < marks.GetLength(0); judgeIndex++)
+                        for (int j = 0; j < marks.GetLength(1); j++)
                         {
-                            marks[judgeIndex, jumpIndex] = result[judgeIndex];
+                            marks[i, j] = result[j];
                         }
                         return;
                     }
                 }
+
+                throw new InvalidOperationException("Оценки уже проставлены, участники уже попрыгали");
             }
 
             public static void Sort(Participant[] array)
@@ -84,12 +80,12 @@ namespace Lab6
             {
                 Console.WriteLine($"Имя участника - {Name},\nФамилия участника - {Surname},\nСумма баллов - {TotalScore}");
                 Console.WriteLine("Оценки судей:");
-                for (int jumpIndex = 0; jumpIndex < marks.GetLength(1); jumpIndex++)
+                for (int jumpIndex = 0; jumpIndex < marks.GetLength(0); jumpIndex++)
                 {
                     Console.Write("Прыжок №" + (jumpIndex + 1) + ": ");
-                    for (int judgeIndex = 0; judgeIndex < marks.GetLength(0); judgeIndex++)
+                    for (int judgeIndex = 0; judgeIndex < marks.GetLength(1); judgeIndex++)
                     {
-                        Console.Write($"Судья {judgeIndex}: {marks[judgeIndex, jumpIndex]}, ");
+                        Console.Write($"Судья {judgeIndex + 1}: {marks[jumpIndex, judgeIndex]}, ");
                     }
                     Console.WriteLine();
                 }
