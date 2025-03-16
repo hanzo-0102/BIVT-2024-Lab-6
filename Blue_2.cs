@@ -43,7 +43,7 @@ namespace Lab_6
             {
                 if (result.Length != 5)
                 {
-                    throw new ArgumentException("Неверное количество судей (должно быть 5 элементов)");
+                    return;
                 }
 
                 for (int i = 0; i < marks.GetLength(0); i++)
@@ -68,7 +68,7 @@ namespace Lab_6
                     }
                 }
 
-                throw new InvalidOperationException("Оценки уже проставлены, участники уже попрыгали");
+                return;
             }
 
             public static void Sort(Participant[] array)

@@ -30,12 +30,12 @@ namespace Lab_6
             {
                 if (placeSet)
                 {
-                    throw new InvalidOperationException("Место уже объявлено");
+                    return;
                 }
 
                 if (place < 1 || place > 18)
                 {
-                    throw new ArgumentException("Недопустимое значение. Возможный диапазон - от 1 до 18 включительно");
+                    return;
                 }
 
                 this.place = place;
@@ -106,7 +106,7 @@ namespace Lab_6
                 }
                 else
                 {
-                    throw new InvalidOperationException("Слишком большая команда (максимальное число спортсменов в команде - 6)");
+                    return;
                 }
             }
 

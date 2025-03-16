@@ -59,7 +59,7 @@ namespace Lab_6
             {
                 if (time != 0 && time != 2 && time != 5 && time != 10)
                 {
-                    throw new ArgumentException("Неверное время. Возможные значения: 0, 2, 5, 10");
+                    return;
                 }
 
                 if (matchCount < penaltyTimes.Length)
@@ -69,7 +69,7 @@ namespace Lab_6
                 }
                 else
                 {
-                    throw new InvalidOperationException("Превышено допустимое количество матчей");
+                    return;
                 }
             }
 

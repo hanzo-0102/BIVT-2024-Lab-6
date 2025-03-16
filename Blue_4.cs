@@ -44,7 +44,7 @@ namespace Lab_6 {
                 }
                 else
                 {
-                    throw new InvalidOperationException("Превышено допустимое колличество матчей");
+                    return;
                 }
             }
             public void Print()
@@ -77,7 +77,7 @@ namespace Lab_6 {
                 }
                 else
                 {
-                    throw new InvalidOperationException("Превышено максимальное количество команд в группе");
+                    return;
                 }
             }
 
