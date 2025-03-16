@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Lab6
+namespace Lab_6
 {
     public class Blue_2
     {
