@@ -19,6 +19,7 @@ namespace Lab_6 {
             {
                 get
                 {
+                    if (scores == null) return 0;
                     int total = 0;
                     for (int i = 0; i < matchCount; i++)
                     {

@@ -42,7 +42,6 @@ namespace Lab_6
                 this.placeSet = true;
             }
 
-            // Method to print sportsman information
             public void Print()
             {
                 Console.WriteLine($"{Name} {Surname}, занял(а) {Place} место");

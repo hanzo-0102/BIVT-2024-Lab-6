@@ -23,6 +23,7 @@ namespace Lab_6
             {
                 get
                 {
+                    if (penaltyTimes == null) return 0;
                     int total = 0;
                     for (int i = 0; i < matchCount; i++)
                     {
@@ -36,6 +37,7 @@ namespace Lab_6
             {
                 get
                 {
+                    if (penaltyTimes == null) return false;
                     for (int i = 0; i < matchCount; i++)
                     {
                         if (penaltyTimes[i] == 10)
@@ -57,7 +59,7 @@ namespace Lab_6
 
             public void PlayMatch(int time)
             {
-                if (time != 0 && time != 2 && time != 5 && time != 10)
+                if (time != 0 && time != 2 && time != 5 && time != 10 || penaltyTimes == null || penaltyTimes.Length == 0 || matchCount < 0)
                 {
                     return;
                 }
@@ -75,10 +77,21 @@ namespace Lab_6
 
             public static void Sort(Participant[] array)
             {
-                Array.Sort(array, (x, y) => x.TotalTime.CompareTo(y.TotalTime));
+                if (array.Length == 0) return;
+                for (int i = 0; i < array.Length; i++)
+                {
+                    for (int j = 0; j < array.Length - 1; j++)
+                    {
+                        if (array[j].TotalTime > array[j + 1].TotalTime)
+                        {
+                            Participant temp = array[j];
+                            array[j] = array[j + 1];
+                            array[j + 1] = temp;
+                        }
+                    }
+                }
             }
 
-            // Method to print participant information
             public void Print()
             {
                 string status = "";
