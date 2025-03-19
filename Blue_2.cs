@@ -42,7 +42,7 @@ namespace Lab_6
 
             public void Jump(int[] result)
             {
-                if (result == null || result.Length != 5 || marks == null || marks.GetLength(0) < 1 || marks.GetLength(1) < 1)
+                if (result == null || marks == null)
                 {
                     return;
                 }

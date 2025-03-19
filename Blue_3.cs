@@ -59,7 +59,7 @@ namespace Lab_6
 
             public void PlayMatch(int time)
             {
-                if (time != 0 && time != 2 && time != 5 && time != 10 || penaltyTimes == null || penaltyTimes.Length == 0 || matchCount < 0)
+                if ((time != 0 && time != 2 && time != 5 && time != 10) || penaltyTimes == null || matchCount < 0)
                 {
                     return;
                 }
