@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;		
+using System.Threading.Tasks;		
+using System.Xml.Linq;
 
 namespace Lab_6
 {
@@ -14,7 +18,22 @@ namespace Lab_6
 
             public string Name => name;
             public string Surname => surname;
-            public int[,] Marks => marks;
+            public int[,] Marks		
+	            {		
+	                get		
+	                {		
+	                    if (marks == null || marks.GetLength(0) < 1 || marks.GetLength(1) < 1) return null;		
+	                    int[,] NMarks = new int[marks.GetLength(0), marks.GetLength(1)];		
+	                    for (int i = 0; i< marks.GetLength(0); i++)		
+	                    {		
+	                        for (int j = 0; j< marks.GetLength(1); j++)		
+	                        {		
+	                            NMarks[i, j] = marks[i, j];		
+	                        }		
+	                    }		
+	                    return NMarks;		
+	                }
+              }
 
             public int TotalScore
             {
@@ -74,12 +93,12 @@ namespace Lab_6
 
             public static void Sort(Participant[] array)
             {
-                if (array.Length == 0) return;
+                if (array.Length < 0) return;
                 for (int i = 0; i < array.Length; i++)
                 {
-                    for (int j = 0; j < array.Length - 1; j++)
+                    for (int j = 0; j < array.Length - i - 1; j++)
                     {
-                        if (array[j].TotalScore > array[j + 1].TotalScore)
+                        if (array[j].TotalScore < array[j + 1].TotalScore)
                         {
                             Participant temp = array[j];
                             array[j] = array[j + 1];
@@ -100,7 +119,6 @@ namespace Lab_6
                     {
                         Console.Write($"Судья {judgeIndex + 1}: {marks[jumpIndex, judgeIndex]}, ");
                     }
-                    Console.WriteLine();
                 }
             }
         }

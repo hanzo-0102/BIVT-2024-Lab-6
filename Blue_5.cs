@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Lab_6.Blue_5;
 
 namespace Lab_6
 {
@@ -61,6 +62,7 @@ namespace Lab_6
             {
                 get
                 {
+                    if (sportsmanCount == 0 || sportsmen == null) return 0;
                     int totalScore = 0;
                     for (int i = 0; i < sportsmanCount; i++)
                     {
@@ -78,7 +80,8 @@ namespace Lab_6
             {
                 get
                 {
-                    int topPlace = int.MaxValue;
+                    if (sportsmen == null) return 0;
+                    int topPlace = 18;
                     for (int i = 0; i < sportsmanCount; i++)
                     {
                         if (sportsmen[i].Place < topPlace)
@@ -98,14 +101,14 @@ namespace Lab_6
 
             public void Add(Sportsman sportsman)
             {
-                if (sportsmanCount < sportsmen.Length)
+                if (sportsmen == null)
+                {
+                    sportsmen = new Sportsman[6];
+                }
+                if (sportsmanCount < 6)
                 {
                     sportsmen[sportsmanCount] = sportsman;
                     sportsmanCount++;
-                }
-                else
-                {
-                    return;
                 }
             }
 
@@ -119,15 +122,29 @@ namespace Lab_6
 
             public static void Sort(Team[] teams)
             {
-                Array.Sort(teams, (x, y) =>
+                if (teams == null || teams.Length == 0) return;
+
+                for (int i = 0; i < teams.Length - 1; i++)
                 {
-                    int scoreComparison = y.SummaryScore.CompareTo(x.SummaryScore);
-                    if (scoreComparison == 0)
+                    for (int j = 0; j < teams.Length - i - 1; j++)
                     {
-                        return x.TopPlace.CompareTo(y.TopPlace);
+                        if (teams[j].SummaryScore < teams[j + 1].SummaryScore)
+                        {
+                            Team temp = teams[j];
+                            teams[j] = teams[j + 1];
+                            teams[j + 1] = temp;
+                        }
+                        else if (teams[j].SummaryScore == teams[j + 1].SummaryScore)
+                        {
+                            if (teams[j].TopPlace > teams[j + 1].TopPlace)
+                            {
+                                Team temp = teams[j];
+                                teams[j] = teams[j + 1];
+                                teams[j + 1] = temp;
+                            }
+                        }
                     }
-                    return scoreComparison;
-                });
+                }
             }
 
             public void Print()

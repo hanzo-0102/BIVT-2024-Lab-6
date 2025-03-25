@@ -17,7 +17,20 @@ namespace Lab_6
 
             public string Name => name;
             public string Surname => surname;
-            public int[] PenaltyTimes => penaltyTimes;
+            public int[] PenaltyTimes
+            {
+                get
+                {
+                    if (penaltyTimes == null) return null;
+                    int[] NPenaltyTimes = new int[penaltyTimes.Length];
+                    for (int i = 0; i < penaltyTimes.Length; i++)
+                    {
+                        NPenaltyTimes[i] = penaltyTimes[i];
+                    }
+                    return NPenaltyTimes;
+
+                }
+            }
 
             public int TotalTime
             {
@@ -25,7 +38,7 @@ namespace Lab_6
                 {
                     if (penaltyTimes == null) return 0;
                     int total = 0;
-                    for (int i = 0; i < matchCount; i++)
+                    for (int i = 0; i < penaltyTimes.Length; i++)
                     {
                         total += penaltyTimes[i];
                     }
@@ -38,14 +51,14 @@ namespace Lab_6
                 get
                 {
                     if (penaltyTimes == null) return false;
-                    for (int i = 0; i < matchCount; i++)
+                    for (int i = 0; i < penaltyTimes.Length; i++)
                     {
                         if (penaltyTimes[i] == 10)
                         {
-                            return true;
+                            return false;
                         }
                     }
-                    return false;
+                    return true;
                 }
             }
 
@@ -63,16 +76,13 @@ namespace Lab_6
                 {
                     return;
                 }
-
-                if (matchCount < penaltyTimes.Length)
+                int[] newPenaltyTimes = new int[penaltyTimes.Length + 1];
+                for (int i = 0; i < penaltyTimes.Length; i++)
                 {
-                    penaltyTimes[matchCount] = time;
-                    matchCount++;
+                    newPenaltyTimes[i] = penaltyTimes[i];
                 }
-                else
-                {
-                    return;
-                }
+                penaltyTimes = newPenaltyTimes;
+                penaltyTimes[penaltyTimes.Length - 1] = time;
             }
 
             public static void Sort(Participant[] array)
@@ -80,7 +90,7 @@ namespace Lab_6
                 if (array.Length == 0) return;
                 for (int i = 0; i < array.Length; i++)
                 {
-                    for (int j = 0; j < array.Length - 1; j++)
+                    for (int j = 0; j < array.Length - i - 1; j++)
                     {
                         if (array[j].TotalTime > array[j + 1].TotalTime)
                         {
@@ -108,3 +118,4 @@ namespace Lab_6
         }
     }
 }
+

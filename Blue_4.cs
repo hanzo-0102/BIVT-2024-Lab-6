@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Lab_6 { 
     public class Blue_4 {
@@ -13,7 +14,19 @@ namespace Lab_6 {
             private int matchCount;
 
             public string Name => name;
-            public int[] Scores => scores;
+            public int[] Scores
+            {
+                get
+                {
+                    if (scores == null) return null;
+                    int[] Nscores = new int[scores.Length];
+                    for (int i = 0; i < Nscores.Length; i++)
+                    {
+                        Nscores[i] = scores[i];
+                    }
+                    return Nscores;
+                }
+            }
 
             public int TotalScore
             {
@@ -38,16 +51,15 @@ namespace Lab_6 {
 
             public void PlayMatch(int result)
             {
-                if (matchCount < scores.Length)
+                int[] NScores = new int[scores.Length + 1];
+                for (int i = 0; i < scores.Length; i++)
                 {
-                    scores[matchCount] = result;
-                    matchCount++;
+                    NScores[i] = scores[i];
                 }
-                else
-                {
-                    return;
-                }
+                NScores[NScores.Length - 1] = result;
+                scores = NScores;
             }
+
             public void Print()
             {
                 Console.WriteLine($"Команда - {Name} заработала: {TotalScore}");
@@ -71,49 +83,62 @@ namespace Lab_6 {
 
             public void Add(Team team)
             {
-                if (teamCount < teams.Length)
+                if ((teamCount >= 12) || (teams == null)) return;
+
+                else
                 {
                     teams[teamCount] = team;
                     teamCount++;
                 }
-                else
-                {
-                    return;
-                }
             }
-
-            public void Add(Team[] newTeams)
+            public void Add(Team[] teams)
             {
-                foreach (var team in newTeams)
+                if (teams == null || teams.Length == 0 || teams == null) return;
+
+                for (int i = 0; i < teams.Length; i++)
                 {
-                    Add(team);
+                    Add(teams[i]);
                 }
             }
 
             public void Sort()
             {
-                Array.Sort(teams, 0, teamCount, Comparer<Team>.Create((x, y) => y.TotalScore.CompareTo(x.TotalScore)));
+                if (teams.Length == 0 || teams == null) return;
+                for (int i = 0; i < teams.Length; i++)
+                {
+                    for (int j = 0; j < teams.Length - i - 1; j++)
+                    {
+                        if (teams[j].TotalScore < teams[j + 1].TotalScore)
+                        {
+                            Team temp = teams[j];
+                            teams[j] = teams[j + 1];
+                            teams[j + 1] = temp;
+                        }
+                    }
+                }
             }
 
             public static Group Merge(Group group1, Group group2, int size)
             {
-                Team[] mergedTeams = new Team[size];
-                int index = 0;
+                Group finalists = new Group("Финалисты");
 
-                for (int i = 0; i < group1.teamCount && index < size; i++)
+
+                if (size != 12) return finalists;
+                group1.Sort();
+                group2.Sort();
+
+
+                for (int i = 0; i < size / 2; i++)
                 {
-                    mergedTeams[index++] = group1.teams[i];
+                    finalists.Add(group1.Teams[i]);
                 }
 
-                for (int i = 0; i < group2.teamCount && index < size; i++)
+                for (int i = 0; i < size / 2; i++)
                 {
-                    mergedTeams[index++] = group2.teams[i];
+                    finalists.Add(group2.Teams[i]);
                 }
-
-                Group finalGroup = new Group("Финалисты");
-                finalGroup.Add(mergedTeams);
-
-                return finalGroup;
+                finalists.Sort();
+                return finalists;
             }
 
             public void Print()
