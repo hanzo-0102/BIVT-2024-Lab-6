@@ -45,7 +45,7 @@ namespace Lab_6 {
             public Team(string name)
             {
                 this.name = name;
-                this.scores = new int[10];
+                this.scores = new int[0];
                 this.matchCount = 0;
             }
 
@@ -77,7 +77,7 @@ namespace Lab_6 {
             public Group(string name)
             {
                 this.name = name;
-                this.teams = new Team[12];
+                this.teams = new Team[0];
                 this.teamCount = 0;
             }
 

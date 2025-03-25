@@ -66,7 +66,7 @@ namespace Lab_6
             {
                 this.name = name;
                 this.surname = surname;
-                this.penaltyTimes = new int[10];
+                this.penaltyTimes = new int[0];
                 this.matchCount = 0;
             }
 
