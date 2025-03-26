@@ -87,8 +87,10 @@ namespace Lab_6 {
 
                 else
                 {
-                    teams[teamCount] = team;
+                    Team[] newteams = new Team[teamCount + 1];
+                    newteams[teamCount] = team;
                     teamCount++;
+                    teams = newteams;
                 }
             }
             public void Add(Team[] teams)
